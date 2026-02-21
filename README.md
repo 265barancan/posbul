@@ -61,6 +61,3 @@ Production seviyesi, son derece optimize edilmiş bir çıktı elde etmek isters
 npm run build
 ```
 Oluşturulan `dist` kalsörü GitHub Pages, Vercel, Netlify veya dilediğiniz sunucuya (*ör. nginx*) yüklenerek canlıya alınabilir.
-
----
-*Created with ♥️ and Antigravity AAC by Google Deepmind.*
