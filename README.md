@@ -13,6 +13,7 @@
 
 ## 🌟 Özellikler
 
+- 🪄 **Akıllı Asistan (Smart Wizard):** İşletmenizin cirosu, yapısı ve taksit ihtiyaçlarına göre en uygun sanal POS firmalarını saniyeler içinde bulan yeni nesil sihirbaz.
 - ⚡️ **Gerçek Zamanlı Karşılaştırma:** Gelişmiş Taksit, Ciro ve Kart Ailesine göre dinamik komisyon hesaplayıcısı.
 - 🎨 **Modern ve Pürüzsüz Arayüz:** Tamamen Responsive yapı ve *Framer Motion* ile desteklenen pürüzsüz miko-animasyonlar.
 - 🔐 **Yönetim Paneli (Admin Portal):** Sağlayıcıların modifiye edilmesi ve Gelen yorumların onaylanması/yayınlanması için Code Splitting mimarisine oturtulmuş gizli `/admin` portalları.
