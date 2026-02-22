@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useCompareStore } from "../../store/compareStore";
+import { useApplicationStore } from "../../store/applicationStore";
 import { PROVIDERS } from "../../constants/providers";
 import { formatCommission, formatCurrency } from "../../utils/formatters";
 import Badge from "../ui/Badge";
@@ -21,6 +22,7 @@ const COMPARE_ROWS = [
 
 export default function CompareTable() {
     const { selectedIds } = useCompareStore();
+    const { openModal } = useApplicationStore();
 
     const providers = useMemo(
         () => selectedIds.map((id) => PROVIDERS.find((p) => p.id === id)).filter(Boolean),
@@ -173,7 +175,7 @@ export default function CompareTable() {
                                     size="sm"
                                     icon="arrow_forward"
                                     iconPosition="right"
-                                    onClick={() => window.open(p!.applyUrl, "_blank")}
+                                    onClick={() => openModal(p!)}
                                 >
                                     Başvur
                                 </Button>

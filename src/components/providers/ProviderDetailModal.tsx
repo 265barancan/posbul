@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import type { Provider } from "../../types/provider.types";
 import { formatCommission, formatCurrency } from "../../utils/formatters";
 import { REVIEWS } from "../../constants/reviews";
+import { useApplicationStore } from "../../store/applicationStore";
 import Modal from "../ui/Modal";
 import Badge from "../ui/Badge";
 import Button from "../ui/Button";
@@ -20,6 +21,7 @@ export default function ProviderDetailModal({
     onClose,
 }: ProviderDetailModalProps) {
     const [activeTab, setActiveTab] = useState<"info" | "reviews">("info");
+    const { openModal } = useApplicationStore();
 
     const providerReviews = useMemo(
         () => (provider ? REVIEWS.filter((r) => r.providerId === provider.id) : []),
@@ -35,8 +37,8 @@ export default function ProviderDetailModal({
                 <button
                     onClick={() => setActiveTab("info")}
                     className={`flex-1 cursor-pointer rounded-md px-3 py-2 text-sm font-medium transition-all ${activeTab === "info"
-                            ? "bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white"
-                            : "text-slate-500 hover:text-slate-700 dark:text-slate-400"
+                        ? "bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white"
+                        : "text-slate-500 hover:text-slate-700 dark:text-slate-400"
                         }`}
                 >
                     <span className="material-symbols-outlined mr-1 align-middle text-[16px]">info</span>
@@ -45,8 +47,8 @@ export default function ProviderDetailModal({
                 <button
                     onClick={() => setActiveTab("reviews")}
                     className={`flex-1 cursor-pointer rounded-md px-3 py-2 text-sm font-medium transition-all ${activeTab === "reviews"
-                            ? "bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white"
-                            : "text-slate-500 hover:text-slate-700 dark:text-slate-400"
+                        ? "bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white"
+                        : "text-slate-500 hover:text-slate-700 dark:text-slate-400"
                         }`}
                 >
                     <span className="material-symbols-outlined mr-1 align-middle text-[16px]">rate_review</span>
@@ -108,8 +110,8 @@ export default function ProviderDetailModal({
                                 <span
                                     key={star}
                                     className={`material-symbols-outlined filled text-[20px] ${star <= Math.round(provider.rating)
-                                            ? "text-amber-400"
-                                            : "text-slate-300 dark:text-slate-600"
+                                        ? "text-amber-400"
+                                        : "text-slate-300 dark:text-slate-600"
                                         }`}
                                 >
                                     star
@@ -145,7 +147,10 @@ export default function ProviderDetailModal({
                             className="flex-1"
                             icon="arrow_forward"
                             iconPosition="right"
-                            onClick={() => window.open(provider.applyUrl, "_blank")}
+                            onClick={() => {
+                                onClose();
+                                openModal(provider);
+                            }}
                         >
                             Hemen Başvur
                         </Button>

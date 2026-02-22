@@ -10,6 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     size?: ButtonSize;
     icon?: string;
     iconPosition?: "left" | "right";
+    isLoading?: boolean;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -38,6 +39,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             iconPosition = "left",
             className,
             children,
+            isLoading,
             ...props
         },
         ref
@@ -55,11 +57,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 )}
                 {...props}
             >
-                {icon && iconPosition === "left" && (
+                {isLoading && (
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                )}
+                {!isLoading && icon && iconPosition === "left" && (
                     <span className="material-symbols-outlined text-[18px]">{icon}</span>
                 )}
                 {children}
-                {icon && iconPosition === "right" && (
+                {!isLoading && icon && iconPosition === "right" && (
                     <span className="material-symbols-outlined text-[18px]">{icon}</span>
                 )}
             </button>

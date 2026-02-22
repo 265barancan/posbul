@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import ScrollRestore from "./components/ui/ScrollRestore";
 import ToastContainer from "./components/ui/ToastContainer";
+import ApplicationModal from "./components/providers/ApplicationModal";
 import ErrorBoundary from "./components/ui/ErrorBoundary";
 import HomePage from "./pages/HomePage";
 
@@ -68,6 +69,7 @@ function App() {
       <BrowserRouter>
         <ScrollRestore />
         <ToastContainer />
+        <ApplicationModal />
         <Routes>
           {/* Admin Routes */}
           <Route path="/admin/login" element={

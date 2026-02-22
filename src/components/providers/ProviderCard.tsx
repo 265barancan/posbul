@@ -2,6 +2,7 @@ import { memo } from "react";
 import type { Provider } from "../../types/provider.types";
 import { formatCommission } from "../../utils/formatters";
 import { useCompareStore } from "../../store/compareStore";
+import { useApplicationStore } from "../../store/applicationStore";
 import Badge from "../ui/Badge";
 import Button from "../ui/Button";
 
@@ -15,6 +16,7 @@ const ProviderCard = memo(function ProviderCard({
     onInfoClick,
 }: ProviderCardProps) {
     const { addProvider, removeProvider, selectedIds } = useCompareStore();
+    const { openModal } = useApplicationStore();
     const isSelected = selectedIds.includes(provider.id);
     const canAdd = selectedIds.length < 3;
 
@@ -138,7 +140,7 @@ const ProviderCard = memo(function ProviderCard({
                     size="md"
                     icon="arrow_forward"
                     iconPosition="right"
-                    onClick={() => window.open(provider.applyUrl, "_blank")}
+                    onClick={() => openModal(provider)}
                 >
                     Hemen Başvur
                 </Button>
