@@ -7,6 +7,11 @@ export interface Provider {
         min: number;
         max: number | null;
     };
+    installmentRates: {
+        3: number;
+        6: number;
+        12: number;
+    };
     paymentSpeed: string;
     paymentSpeedHours: number;
     features: string[];

@@ -12,6 +12,9 @@ const COMPARE_ROWS = [
     { label: "Değerlendirme", key: "reviews" },
     { label: "Aylık Ücret", key: "monthlyFee" },
     { label: "Kurulum Ücreti", key: "setupFee" },
+    { label: "3 Taksit", key: "installment3" },
+    { label: "6 Taksit", key: "installment6" },
+    { label: "12 Taksit", key: "installment12" },
     { label: "Segment", key: "segment" },
     { label: "Özellikler", key: "features" },
 ] as const;
@@ -55,6 +58,12 @@ export default function CompareTable() {
                 return formatCurrency(provider.monthlyFee);
             case "setupFee":
                 return formatCurrency(provider.setupFee);
+            case "installment3":
+                return `%${provider.installmentRates[3].toFixed(2)}`;
+            case "installment6":
+                return `%${provider.installmentRates[6].toFixed(2)}`;
+            case "installment12":
+                return `%${provider.installmentRates[12].toFixed(2)}`;
             case "segment":
                 return provider.segment === "her ikisi" ? "Bireysel + Kurumsal" : provider.segment;
             case "features":
@@ -78,6 +87,12 @@ export default function CompareTable() {
                 return provider.paymentSpeedHours === bestSpeed;
             case "rating":
                 return provider.rating === bestRating;
+            case "installment3":
+                return provider.installmentRates[3] === Math.min(...providers.map((p) => p!.installmentRates[3]));
+            case "installment6":
+                return provider.installmentRates[6] === Math.min(...providers.map((p) => p!.installmentRates[6]));
+            case "installment12":
+                return provider.installmentRates[12] === Math.min(...providers.map((p) => p!.installmentRates[12]));
             default:
                 return false;
         }
@@ -131,8 +146,8 @@ export default function CompareTable() {
                                         ) : (
                                             <span
                                                 className={`text-sm font-semibold ${best
-                                                        ? "text-emerald-600 dark:text-emerald-400"
-                                                        : "text-slate-700 dark:text-slate-200"
+                                                    ? "text-emerald-600 dark:text-emerald-400"
+                                                    : "text-slate-700 dark:text-slate-200"
                                                     }`}
                                             >
                                                 {value as string}
