@@ -23,6 +23,7 @@ export interface Provider {
     description: string;
     monthlyFee: number | null;
     setupFee: number | null;
+    fixedFee: number;
 }
 
 export type SortOption = "commission" | "speed" | "popularity";

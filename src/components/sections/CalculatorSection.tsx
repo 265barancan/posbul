@@ -8,7 +8,7 @@ const INSTALLMENTS = [1, 2, 3, 6, 9, 12];
 const CARD_FAMILIES = ["Tümü", "Bonus", "World", "Maximum", "Axess", "CardFinans", "Paraf"];
 
 export default function CalculatorSection() {
-    const { amount, installments, cardFamily, setAmount, setInstallments, setCardFamily } = useCalculatorStore();
+    const { amount, installments, cardFamily, transactionCount, includeHiddenCosts, setAmount, setInstallments, setCardFamily, setTransactionCount, setIncludeHiddenCosts } = useCalculatorStore();
 
     // Defer the amount to avoid lagging while typing
     const deferredAmount = useDeferredValue(amount);
@@ -34,15 +34,28 @@ export default function CalculatorSection() {
             // Ensure rate doesn't go below minimum reasonable floor
             rate = Math.max(0.99, rate);
 
-            const commission = (deferredAmount * rate) / 100;
+            const baseCommission = (deferredAmount * rate) / 100;
+            let totalCommission = baseCommission;
+            let hiddenCost = 0;
+
+            if (includeHiddenCosts) {
+                const fixedCost = transactionCount * p.fixedFee;
+                // Enflasyon maliyeti: Cironun tamamı x gün sayısı x günlük %0.1
+                const timeCost = (deferredAmount * (p.paymentSpeedHours / 24)) * 0.001;
+                hiddenCost = fixedCost + timeCost;
+                totalCommission += hiddenCost;
+            }
+
             return {
                 id: p.id,
                 name: p.name,
-                commission,
+                commission: totalCommission,
+                baseCommission,
+                hiddenCost,
                 rate,
             };
         }).sort((a, b) => a.commission - b.commission);
-    }, [deferredAmount, installments, cardFamily]);
+    }, [deferredAmount, installments, cardFamily, transactionCount, includeHiddenCosts]);
 
     const maxCommission = results.length > 0 ? results[results.length - 1].commission : 0;
     const bestProvider = results.length > 0 ? results[0] : null;
@@ -73,19 +86,49 @@ export default function CalculatorSection() {
 
                 {/* Filters */}
                 <AnimatedSection delay={0.1} className="mx-auto mt-8 max-w-3xl space-y-6">
-                    {/* Amount Input */}
-                    <div className="relative">
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-slate-400">
-                            calculate
-                        </span>
-                        <input
-                            type="text"
-                            value={amount > 0 ? `₺${amount.toLocaleString("tr-TR")}` : ""}
-                            onChange={handleInputChange}
-                            placeholder="Aylık Cironuz (Örn: ₺50.000)"
-                            className="w-full rounded-2xl border border-slate-300 bg-white py-4 pl-12 pr-4 text-center text-2xl font-bold text-slate-900 placeholder:text-slate-300 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-600"
-                            aria-label="Aylık ciro"
-                        />
+                    <div className="grid gap-6 sm:grid-cols-2">
+                        {/* Amount Input */}
+                        <div className="relative">
+                            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-slate-400">
+                                calculate
+                            </span>
+                            <input
+                                type="text"
+                                value={amount > 0 ? `₺${amount.toLocaleString("tr-TR")}` : ""}
+                                onChange={handleInputChange}
+                                placeholder="Aylık Cironuz (Örn: ₺50.000)"
+                                className="w-full rounded-2xl border border-slate-300 bg-white py-4 pl-12 pr-4 font-bold text-slate-900 placeholder:text-slate-300 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-600"
+                                aria-label="Aylık ciro"
+                            />
+                        </div>
+
+                        {/* Transaction Count Input */}
+                        <div className="relative">
+                            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-slate-400">
+                                receipt_long
+                            </span>
+                            <input
+                                type="text"
+                                value={transactionCount > 0 ? transactionCount.toString() : ""}
+                                onChange={(e) => setTransactionCount(parseInt(e.target.value.replace(/[^0-9]/g, "")) || 0)}
+                                placeholder="Aylık İşlem Adedi (Örn: 100)"
+                                className="w-full rounded-2xl border border-slate-300 bg-white py-4 pl-12 pr-4 font-bold text-slate-900 placeholder:text-slate-300 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-600"
+                                aria-label="Aylık işlem adedi"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Hidden Costs Toggle */}
+                    <div className="flex items-center justify-center gap-3">
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Gizli Maliyetleri Hesapla</span>
+                        <button
+                            onClick={() => setIncludeHiddenCosts(!includeHiddenCosts)}
+                            className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${includeHiddenCosts ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-700'}`}
+                            role="switch"
+                            aria-checked={includeHiddenCosts}
+                        >
+                            <span aria-hidden="true" className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${includeHiddenCosts ? 'translate-x-5' : 'translate-x-0'}`} />
+                        </button>
                     </div>
 
                     <div className="grid gap-6 sm:grid-cols-2">
@@ -191,9 +234,12 @@ export default function CalculatorSection() {
                                             </span>
                                         </motion.div>
                                     </div>
-                                    <div className="w-20 shrink-0 text-right">
+                                    <div className="w-24 shrink-0 text-right">
                                         <p className="text-sm font-bold text-slate-700 dark:text-slate-200">%{r.rate.toFixed(2)}</p>
                                         <p className="text-[10px] text-slate-400">Komisyon</p>
+                                        {includeHiddenCosts && r.hiddenCost > 0 && (
+                                            <p className="text-[10px] text-rose-500 font-medium mt-1">+ {formatTL(r.hiddenCost)} Gizli Maliyet</p>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}

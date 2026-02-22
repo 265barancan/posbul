@@ -20,6 +20,7 @@ export const PROVIDERS: Provider[] = [
             "Türkiye'nin en büyük ödeme altyapı şirketi. PayU iştirakı olan iyzico, 200.000'den fazla üye iş yerine hizmet vermektedir. Gelişmiş fraud koruması, pazar yeri çözümü ve çoklu para birimi desteği ile e-ticaret altyapınızı güçlendirin.",
         monthlyFee: null,
         setupFee: null,
+        fixedFee: 0.25,
     },
     {
         id: "paytr",
@@ -40,6 +41,7 @@ export const PROVIDERS: Provider[] = [
             "PayTR, hızlı ödeme ve düşük komisyon oranlarıyla öne çıkan yerli ödeme çözümüdür. Linkle ödeme, QR kod ve mobil ödeme seçenekleri ile müşterilerinize çok kanallı ödeme deneyimi sunun.",
         monthlyFee: null,
         setupFee: null,
+        fixedFee: 0.00,
     },
     {
         id: "param",
@@ -60,6 +62,7 @@ export const PROVIDERS: Provider[] = [
             "Param, fiziki kart avantajı ile hem online hem offline ödeme çözümü sunan kapsamlı bir platformdur. Anlık transfer ve 7/24 müşteri desteği ile kesintisiz ödeme deneyimi sağlayın.",
         monthlyFee: null,
         setupFee: null,
+        fixedFee: 0.15,
     },
     {
         id: "sipay",
@@ -80,6 +83,7 @@ export const PROVIDERS: Provider[] = [
             "Sipay, dijital cüzdan teknolojisi ve taksitli ödeme seçenekleriyle modern ödeme deneyimi sunan yenilikçi bir platformdur.",
         monthlyFee: null,
         setupFee: null,
+        fixedFee: 0.00,
     },
     {
         id: "craftgate",
@@ -100,6 +104,7 @@ export const PROVIDERS: Provider[] = [
             "Craftgate, geliştiriciler için tasarlanmış modern ödeme orkestrasyon platformudur. Sandbox ortamı, detaylı API dokümantasyonu ve webhook desteğiyle entegrasyon süreçlerinizi hızlandırın.",
         monthlyFee: null,
         setupFee: null,
+        fixedFee: 0.50,
     },
     {
         id: "moka",
@@ -120,5 +125,6 @@ export const PROVIDERS: Provider[] = [
             "Moka, kolay entegrasyon ve kapsamlı raporlama özellikleriyle öne çıkan ödeme çözümüdür. Abonelik yönetimi ile tekrarlayan ödemeleri kolayca yönetin.",
         monthlyFee: null,
         setupFee: null,
+        fixedFee: 0.20,
     },
 ];
