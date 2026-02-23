@@ -175,7 +175,7 @@ export default function CompareTable() {
                                     size="sm"
                                     icon="arrow_forward"
                                     iconPosition="right"
-                                    onClick={() => openModal(p!)}
+                                    onClick={() => openModal({ provider: p! })}
                                 >
                                     Başvur
                                 </Button>

@@ -140,7 +140,7 @@ const ProviderCard = memo(function ProviderCard({
                     size="md"
                     icon="arrow_forward"
                     iconPosition="right"
-                    onClick={() => openModal(provider)}
+                    onClick={() => openModal({ provider })}
                 >
                     Hemen Başvur
                 </Button>

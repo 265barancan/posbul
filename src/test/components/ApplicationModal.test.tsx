@@ -21,7 +21,7 @@ describe("ApplicationModal", () => {
     });
 
     it("renders correctly when open", () => {
-        useApplicationStore.getState().openModal(mockProvider);
+        useApplicationStore.getState().openModal({ provider: mockProvider });
         render(<ApplicationModal />);
 
         const dialog = screen.getByRole("dialog");
@@ -33,9 +33,19 @@ describe("ApplicationModal", () => {
         expect(screen.getByLabelText(/Firma Ünvanı/i)).toBeInTheDocument();
     });
 
+    it("renders correctly in general mode", () => {
+        useApplicationStore.getState().openModal({ isGeneral: true });
+        render(<ApplicationModal />);
+
+        const dialog = screen.getByRole("dialog");
+        expect(dialog).toBeInTheDocument();
+        expect(screen.getByText(/Size Özel Teklif İsteyin/i)).toBeInTheDocument();
+        expect(screen.getByText(/VIP Fiyatlandırma Avantajı/i)).toBeInTheDocument();
+    });
+
     it("shows error toast if KVKK is not accepted on submit", async () => {
         const user = userEvent.setup();
-        useApplicationStore.getState().openModal(mockProvider);
+        useApplicationStore.getState().openModal({ provider: mockProvider });
         render(<ApplicationModal />);
 
         // Fill required fields but not KVKK
@@ -56,7 +66,7 @@ describe("ApplicationModal", () => {
     it("submits successfully when form is filled and KVKK is accepted", async () => {
         const user = userEvent.setup();
 
-        useApplicationStore.getState().openModal(mockProvider);
+        useApplicationStore.getState().openModal({ provider: mockProvider });
         render(<ApplicationModal />);
 
         // Fill form

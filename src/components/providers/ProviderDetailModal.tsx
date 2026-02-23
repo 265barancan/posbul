@@ -149,7 +149,7 @@ export default function ProviderDetailModal({
                             iconPosition="right"
                             onClick={() => {
                                 onClose();
-                                openModal(provider);
+                                openModal({ provider });
                             }}
                         >
                             Hemen Başvur

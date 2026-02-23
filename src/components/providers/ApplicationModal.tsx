@@ -5,7 +5,7 @@ import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 
 export default function ApplicationModal() {
-    const { isOpen, selectedProvider, closeModal } = useApplicationStore();
+    const { isOpen, selectedProvider, isGeneral, closeModal } = useApplicationStore();
     const { addToast } = useToastStore();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,10 @@ export default function ApplicationModal() {
         kvkkCompleted: false,
     });
 
-    if (!isOpen || !selectedProvider) return null;
+    if (!isOpen || (!selectedProvider && !isGeneral)) return null;
+
+    const isGeneralMode = isGeneral && !selectedProvider;
+    const providerName = isGeneralMode ? "POSBul Çözüm Ortakları" : selectedProvider?.name;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -46,16 +49,26 @@ export default function ApplicationModal() {
         });
     };
 
+    const modalTitle = isGeneralMode ? "Size Özel Teklif İsteyin" : `${providerName} Hızlı Başvuru`;
+
     return (
-        <Modal isOpen={isOpen} onClose={closeModal} title={`${selectedProvider.name} Hızlı Başvuru`} size="md">
+        <Modal isOpen={isOpen} onClose={closeModal} title={modalTitle} size="md">
             <div className="mb-6 flex items-center gap-4 rounded-xl bg-primary/5 p-4 dark:bg-primary/10">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm dark:bg-slate-800">
-                    <span className="material-symbols-outlined text-[24px] text-primary">rocket_launch</span>
+                    <span className="material-symbols-outlined text-[24px] text-primary">
+                        {isGeneralMode ? "diamond" : "rocket_launch"}
+                    </span>
                 </div>
                 <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white">Özel Teklif Fırsatı</h4>
+                    <h4 className="font-semibold text-slate-900 dark:text-white">
+                        {isGeneralMode ? "VIP Fiyatlandırma Avantajı" : "Özel Teklif Fırsatı"}
+                    </h4>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Bilgilerinizi bırakın, <strong>{selectedProvider.name}</strong> yetkilileri size özel komisyon oranlarıyla ulaşsın.
+                        {isGeneralMode ? (
+                            <span>Bilgilerinizi bırakın, işletmenizin hacmine en uygun <strong>en iyi 3 kurumdan</strong> teklif hazırlayalım.</span>
+                        ) : (
+                            <span>Bilgilerinizi bırakın, <strong>{providerName}</strong> yetkilileri size özel komisyon oranlarıyla ulaşsın.</span>
+                        )}
                     </p>
                 </div>
             </div>
@@ -139,7 +152,7 @@ export default function ApplicationModal() {
                         <label htmlFor="kvkk" className="cursor-pointer font-medium text-slate-700 dark:text-slate-300">
                             KVKK Aydınlatma Metni'ni okudum ve onaylıyorum.
                         </label>{" "}
-                        Kişisel verilerim, bana özel teklif sunulabilmesi amacıyla {selectedProvider.name} ile paylaşılacaktır.
+                        Kişisel verilerim, bana özel teklif sunulabilmesi amacıyla {providerName} ile paylaşılacaktır.
                     </div>
                 </div>
 
