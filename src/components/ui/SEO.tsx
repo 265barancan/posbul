@@ -10,6 +10,7 @@ interface SEOProps {
         publishedTime?: string;
         author?: string;
         tags?: string[];
+        modifiedTime?: string;
     };
 }
 
@@ -28,6 +29,39 @@ export default function SEO({
 }: SEOProps) {
     const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Sanal POS Karşılaştırma Platformu`;
     const url = `${BASE_URL}${path}`;
+
+    // Generate JSON-LD Structured Data
+    const structuredData = type === "article" && article ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": fullTitle,
+        "image": [`${BASE_URL}${ogImage}`],
+        "datePublished": article.publishedTime,
+        "dateModified": article.modifiedTime || article.publishedTime,
+        "author": [{
+            "@type": "Person",
+            "name": article.author || SITE_NAME,
+        }],
+        "publisher": {
+            "@type": "Organization",
+            "name": SITE_NAME,
+            "logo": {
+                "@type": "ImageObject",
+                "url": `${BASE_URL}/logo.png`
+            }
+        },
+        "description": description
+    } : {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": SITE_NAME,
+        "url": BASE_URL,
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": `${BASE_URL}/karsilastir?q={search_term_string}`,
+            "query-input": "required name=search_term_string"
+        }
+    };
 
     return (
         <Helmet>
@@ -60,6 +94,11 @@ export default function SEO({
             {article?.tags?.map((tag) => (
                 <meta key={tag} property="article:tag" content={tag} />
             ))}
+
+            {/* Structured Data (JSON-LD) */}
+            <script type="application/ld+json">
+                {JSON.stringify(structuredData)}
+            </script>
         </Helmet>
     );
 }

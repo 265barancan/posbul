@@ -8,4 +8,7 @@ export interface BlogPost {
     readTime: number;
     category: string;
     icon: string;
+    metaDescription?: string;
+    focusKeywords?: string[];
+    coverImage?: string;
 }

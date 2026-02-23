@@ -6,6 +6,8 @@ export const BLOG_POSTS: BlogPost[] = [
         title: "Sanal POS Nedir? Kapsamlı Rehber",
         excerpt:
             "Sanal POS'un ne olduğunu, nasıl çalıştığını ve işletmeniz için neden önemli olduğunu öğrenin. E-ticaret ödeme altyapısının temellerini anlatan kapsamlı rehber.",
+        metaDescription: "Sanal POS nedir, ne işe yarar ve e-ticaret sitenize nasıl entegre edilir? Firmalar için ödeme altyapısı seçerken dikkat edilmesi gereken her şey bu rehberde.",
+        focusKeywords: ["sanal pos nedir", "sanal pos entegrasyonu", "ödeme altyapısı", "e-ticaret ödeme alma"],
         content: `## Sanal POS Nedir?
 
 Sanal POS (Point of Sale), fiziksel bir POS cihazı olmadan internet üzerinden kredi kartı ve banka kartı ile ödeme almayı sağlayan dijital bir ödeme altyapısıdır.
@@ -51,6 +53,8 @@ Online satış yapan her işletme sanal POS'a ihtiyaç duyar:
         title: "2026'da En Düşük Komisyonlu Sanal POS Hangisi?",
         excerpt:
             "Şubat 2026 güncel verileriyle Türkiye'deki sanal POS sağlayıcılarının komisyon oranlarını karşılaştırdık. İşletmeniz için en uygun oranı bulun.",
+        metaDescription: "2026 yılı güncel Türkiye sanal POS komisyon oranları karşılaştırması. Param, PayTR, iyzico, Sipay ve daha fazlası için en düşük komisyonlu çözümleri inceleyin.",
+        focusKeywords: ["düşük komisyonlu sanal pos", "sanal pos karşılaştırma 2026", "en iyi sanal pos", "pos komisyon oranları"],
         content: `## En Düşük Komisyonlu Sanal POS Sağlayıcıları
 
 Komisyon oranları, e-ticaret yapan işletmeler için en önemli maliyet kalemlerinden biridir. 2026 yılı güncel verilerine göre Türkiye'deki sanal POS sağlayıcılarını karşılaştırdık.
@@ -89,6 +93,8 @@ En düşük komisyon oranı şu an **Param** ile **%1.99** seviyesindedir. Ancak
         title: "E-Ticaret Ödeme Trendleri 2026",
         excerpt:
             "2026 yılında e-ticaret dünyasında öne çıkan ödeme teknolojileri ve trendleri. QR kod, dijital cüzdan, BNPL ve daha fazlası.",
+        metaDescription: "2026 yılında e-ticaret siteleri için yeni nesil ödeme sistemleri trendleri. BNPL, QR ödemeler, açık bankacılık ve yenilikçi çözümler rehberi.",
+        focusKeywords: ["e-ticaret trendleri 2026", "qr ödeme", "dijital cüzdan", "şimdi al sonra öde", "bnpl"],
         content: `## 2026 E-Ticaret Ödeme Trendleri
 
 E-ticaret sektörü hızla dönüşüyor ve ödeme teknolojileri bu dönüşümün merkezinde yer alıyor.

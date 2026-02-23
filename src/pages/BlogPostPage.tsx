@@ -112,15 +112,15 @@ export default function BlogPostPage() {
             <SEO
                 title={post.title}
                 path={`/blog/${post.slug}`}
-                description={post.excerpt}
+                description={post.metaDescription || post.excerpt}
                 type="article"
                 article={{
                     publishedTime: post.date,
                     author: post.author,
-                    tags: [post.category],
+                    tags: post.focusKeywords || [post.category],
                 }}
             />
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <article itemScope itemType="https://schema.org/Article" className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
                 {/* Back link */}
                 <Link
                     to="/blog"
@@ -141,11 +141,13 @@ export default function BlogPostPage() {
                             {post.readTime} dk okuma
                         </span>
                         <span className="text-xs text-slate-400">
-                            {new Date(post.date).toLocaleDateString("tr-TR", {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                            })}
+                            <time dateTime={post.date}>
+                                {new Date(post.date).toLocaleDateString("tr-TR", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                })}
+                            </time>
                         </span>
                     </div>
 
@@ -154,22 +156,26 @@ export default function BlogPostPage() {
                         {post.title}
                     </h1>
 
-                    {/* Content */}
-                    <article className="prose-slate">
-                        {renderContent(post.content)}
-                    </article>
-                </AnimatedSection>
+                    {/* Author Metadata (Hidden but Semantic for SEO) */}
+                    <meta itemProp="author" content={post.author} />
+                    <meta itemProp="datePublished" content={post.date} />
 
-                {/* Back to blog */}
-                <div className="mt-12 border-t border-slate-200 pt-6 dark:border-slate-700">
-                    <Link
-                        to="/blog"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-                    >
-                        <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-                        Diğer yazılara göz at
-                    </Link>
-                </div>
+                    {/* Content */}
+                    <div className="prose-slate" itemProp="articleBody">
+                        {renderContent(post.content)}
+                    </div>
+                </AnimatedSection>
+            </article>
+
+            {/* Back to blog */}
+            <div className="mx-auto mt-12 max-w-3xl border-t border-slate-200 px-4 pt-6 dark:border-slate-700 sm:px-6 lg:px-8">
+                <Link
+                    to="/blog"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+                >
+                    <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+                    Diğer yazılara göz at
+                </Link>
             </div>
         </div>
     );
