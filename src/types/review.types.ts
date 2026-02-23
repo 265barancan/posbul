@@ -5,4 +5,5 @@ export interface Review {
     rating: number;
     comment: string;
     date: string;
+    isVerified?: boolean;
 }

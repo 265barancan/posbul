@@ -15,6 +15,18 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                     <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
                         {review.userName}
                     </span>
+                    {review.isVerified && (
+                        <div className="group relative flex items-center">
+                            <span className="material-symbols-outlined text-[16px] text-blue-500">
+                                verified
+                            </span>
+                            {/* Tooltip */}
+                            <div className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-slate-700">
+                                Doğrulanmış İşletme
+                                <div className="absolute left-1/2 top-full -mt-1 -translate-x-1/2 border-4 border-transparent border-t-slate-800 dark:border-t-slate-700"></div>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <span className="text-xs text-slate-400">
                     {new Date(review.date).toLocaleDateString("tr-TR")}

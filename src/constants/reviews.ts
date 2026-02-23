@@ -8,6 +8,7 @@ export const REVIEWS: Review[] = [
         rating: 5,
         comment: "Entegrasyonu çok kolay, dokümantasyonları harika. Pazar yeri çözümü işimize çok yaradı.",
         date: "2026-01-15",
+        isVerified: true,
     },
     {
         id: "r2",
@@ -24,6 +25,7 @@ export const REVIEWS: Review[] = [
         rating: 5,
         comment: "2 saat içinde ödeme gerçekten çalışıyor. Nakit akışı açısından büyük avantaj.",
         date: "2026-01-20",
+        isVerified: true,
     },
     {
         id: "r4",
@@ -48,6 +50,7 @@ export const REVIEWS: Review[] = [
         rating: 5,
         comment: "En düşük komisyon oranını Param'da bulduk. Fiziki kart avantajı da cabası.",
         date: "2026-02-01",
+        isVerified: true,
     },
     {
         id: "r7",
@@ -64,6 +67,7 @@ export const REVIEWS: Review[] = [
         rating: 5,
         comment: "Geliştirici olarak en iyi deneyimi Craftgate'te yaşadım. Sandbox ortamı mükemmel.",
         date: "2026-01-18",
+        isVerified: true,
     },
     {
         id: "r9",
