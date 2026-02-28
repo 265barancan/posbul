@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { useThemeStore } from "./store/themeStore";
+import { useAuthStore } from "./store/authStore";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ui/ScrollToTop";
@@ -27,6 +28,8 @@ const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute"));
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
 const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage"));
 const AdminDashboardPage = lazy(() => import("./pages/admin/AdminDashboardPage"));
+const MerchantDashboardPage = lazy(() => import("./pages/merchant/MerchantDashboardPage"));
+const MerchantLeadsPage = lazy(() => import("./pages/merchant/MerchantLeadsPage"));
 const AdminProvidersPage = lazy(() => import("./pages/admin/AdminProvidersPage"));
 const AdminReviewsPage = lazy(() => import("./pages/admin/AdminReviewsPage"));
 const AdminPlaceholderPage = lazy(() => import("./pages/admin/AdminPlaceholderPage"));
@@ -37,6 +40,14 @@ function PageLoader() {
       <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
     </div>
   );
+}
+
+function RoleBasedDashboard() {
+  const user = useAuthStore((s) => s.user);
+  if (user?.role === "MERCHANT") {
+    return <MerchantDashboardPage />;
+  }
+  return <AdminDashboardPage />;
 }
 
 // Main website layout with Header and Footer
@@ -82,7 +93,8 @@ function App() {
             </Suspense>
           }>
             <Route element={<AdminLayout />}>
-              <Route index element={<AdminDashboardPage />} />
+              <Route index element={<RoleBasedDashboard />} />
+              <Route path="leads" element={<MerchantLeadsPage />} />
               <Route path="providers" element={<AdminProvidersPage />} />
               <Route path="reviews" element={<AdminReviewsPage />} />
               <Route path="blog" element={<AdminPlaceholderPage title="Blog" />} />

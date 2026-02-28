@@ -9,6 +9,11 @@ const ADMIN_NAV = [
     { name: "Ayarlar", path: "/admin/settings", icon: "settings", end: false },
 ];
 
+const MERCHANT_NAV = [
+    { name: "Özet", path: "/admin", icon: "monitoring", end: true },
+    { name: "Gelen Başvurular", path: "/admin/leads", icon: "format_list_bulleted", end: false },
+];
+
 export default function AdminLayout() {
     const { user, logout } = useAuthStore();
     const navigate = useNavigate();
@@ -25,12 +30,12 @@ export default function AdminLayout() {
                 <div className="mb-8 flex items-center gap-2 px-2">
                     <span className="material-symbols-outlined text-[28px] text-primary">point_of_sale</span>
                     <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        POSBul <span className="text-primary font-normal">Admin</span>
+                        POSBul <span className="text-primary font-normal">{user?.role === "MERCHANT" ? "Merchant" : "Admin"}</span>
                     </span>
                 </div>
 
                 <nav className="space-y-1">
-                    {ADMIN_NAV.map((item) => (
+                    {(user?.role === "MERCHANT" ? MERCHANT_NAV : ADMIN_NAV).map((item) => (
                         <NavLink
                             key={item.path}
                             to={item.path}
