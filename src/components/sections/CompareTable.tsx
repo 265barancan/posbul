@@ -18,6 +18,9 @@ const COMPARE_ROWS = [
     { label: "12 Taksit", key: "installment12" },
     { label: "Segment", key: "segment" },
     { label: "Özellikler", key: "features" },
+    { label: "USD Komisyonu", key: "usdRate" },
+    { label: "EUR Komisyonu", key: "eurRate" },
+    { label: "USDT (Kripto)", key: "usdtRate" },
 ] as const;
 
 export default function CompareTable() {
@@ -70,6 +73,12 @@ export default function CompareTable() {
                 return provider.segment === "her ikisi" ? "Bireysel + Kurumsal" : provider.segment;
             case "features":
                 return provider.features;
+            case "usdRate":
+                return provider.currencyRates?.USD ? `%${provider.currencyRates.USD.toFixed(2)}` : "-";
+            case "eurRate":
+                return provider.currencyRates?.EUR ? `%${provider.currencyRates.EUR.toFixed(2)}` : "-";
+            case "usdtRate":
+                return provider.cryptoRates?.USDT ? `%${provider.cryptoRates.USDT.toFixed(2)}` : "-";
             default:
                 return "";
         }
@@ -95,6 +104,18 @@ export default function CompareTable() {
                 return provider.installmentRates[6] === Math.min(...providers.map((p) => p!.installmentRates[6]));
             case "installment12":
                 return provider.installmentRates[12] === Math.min(...providers.map((p) => p!.installmentRates[12]));
+            case "usdRate": {
+                const vals = providers.map(p => p!.currencyRates?.USD).filter((v): v is number => v !== undefined);
+                return vals.length > 0 && provider.currencyRates?.USD === Math.min(...vals);
+            }
+            case "eurRate": {
+                const vals = providers.map(p => p!.currencyRates?.EUR).filter((v): v is number => v !== undefined);
+                return vals.length > 0 && provider.currencyRates?.EUR === Math.min(...vals);
+            }
+            case "usdtRate": {
+                const vals = providers.map(p => p!.cryptoRates?.USDT).filter((v): v is number => v !== undefined);
+                return vals.length > 0 && provider.cryptoRates?.USDT === Math.min(...vals);
+            }
             default:
                 return false;
         }

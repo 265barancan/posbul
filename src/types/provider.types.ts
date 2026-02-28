@@ -12,6 +12,14 @@ export interface Provider {
         6: number;
         12: number;
     };
+    currencyRates?: {
+        USD?: number;
+        EUR?: number;
+        GBP?: number;
+    };
+    cryptoRates?: {
+        USDT?: number;
+    };
     paymentSpeed: string;
     paymentSpeedHours: number;
     features: string[];

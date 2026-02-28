@@ -76,7 +76,7 @@ export default function ProviderDetailModal({
                     </div>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
                         <div className="rounded-xl bg-slate-50 p-4 dark:bg-slate-800">
                             <p className="text-xs font-medium text-slate-400">Komisyon Oranı</p>
                             <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
@@ -99,6 +99,18 @@ export default function ProviderDetailModal({
                             <p className="text-xs font-medium text-slate-400">Kurulum Ücreti</p>
                             <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
                                 {formatCurrency(provider.setupFee)}
+                            </p>
+                        </div>
+                        <div className="rounded-xl bg-slate-50 p-4 dark:bg-slate-800">
+                            <p className="text-xs font-medium text-slate-400">Döviz (USD/EUR)</p>
+                            <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+                                {provider.currencyRates?.USD ? `%${provider.currencyRates.USD}` : provider.currencyRates?.EUR ? `%${provider.currencyRates.EUR}` : "-"}
+                            </p>
+                        </div>
+                        <div className="rounded-xl bg-slate-50 p-4 dark:bg-slate-800">
+                            <p className="text-xs font-medium text-slate-400">Kripto (USDT)</p>
+                            <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+                                {provider.cryptoRates?.USDT ? `%${provider.cryptoRates.USDT}` : "-"}
                             </p>
                         </div>
                     </div>

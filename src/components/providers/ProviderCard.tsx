@@ -36,11 +36,19 @@ const ProviderCard = memo(function ProviderCard({
                 }`}
         >
             {/* Popular Badge */}
-            {provider.isPopular && (
-                <div className="absolute -top-3 left-6 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-orange-500/25">
-                    En Popüler
-                </div>
-            )}
+            <div className="absolute -top-3 left-6 flex gap-2">
+                {provider.isPopular && (
+                    <div className="rounded-full bg-orange-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-orange-500/25">
+                        En Popüler
+                    </div>
+                )}
+                {(provider.currencyRates || provider.cryptoRates) && (
+                    <div className="rounded-full bg-indigo-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-indigo-500/25 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[12px]">public</span>
+                        Döviz Destekli
+                    </div>
+                )}
+            </div>
 
             {/* Compare Checkbox */}
             <button

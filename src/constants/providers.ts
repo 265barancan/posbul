@@ -8,16 +8,20 @@ export const PROVIDERS: Provider[] = [
         logo: "/logos/iyzico.png",
         commissionRate: { min: 2.99, max: null },
         installmentRates: { 3: 5.49, 6: 8.99, 12: 14.50 },
-        paymentSpeed: "Ertesi Gün",
-        paymentSpeedHours: 24,
-        features: ["Pazar Yeri Çözümü", "Çoklu Para Birimi", "Fraud Koruması"],
+        paymentSpeed: "Haftalık",
+        paymentSpeedHours: 168,
+        features: ["Pazar Yeri", "Korumalı Alışveriş", "Sanal POS", "Dövizle Ödeme"],
+        currencyRates: {
+            USD: 2.99,
+            EUR: 2.89
+        },
         isPopular: true,
         segment: "her ikisi",
         applyUrl: "https://iyzico.com",
         rating: 4.5,
         reviewCount: 1240,
         description:
-            "Türkiye'nin en büyük ödeme altyapı şirketi. PayU iştirakı olan iyzico, 200.000'den fazla üye iş yerine hizmet vermektedir. Gelişmiş fraud koruması, pazar yeri çözümü ve çoklu para birimi desteği ile e-ticaret altyapınızı güçlendirin.",
+            "Türkiye'nin en büyük ödeme altyapı şirketi. PayU iştirakı olan iyzico, 200.000'den fazla üye iş yerinde hizmet vermektedir. Gelişmiş fraud koruması, pazar yeri çözümü ve çoklu para birimi desteği ile e-ticaret altyapınızı güçlendirin.",
         monthlyFee: null,
         setupFee: null,
         fixedFee: 0.25,
@@ -29,10 +33,18 @@ export const PROVIDERS: Provider[] = [
         logo: "/logos/paytr.png",
         commissionRate: { min: 2.49, max: null },
         installmentRates: { 3: 4.99, 6: 7.49, 12: 12.90 },
-        paymentSpeed: "2 Saat İçinde",
-        paymentSpeedHours: 2,
-        features: ["Linkle Ödeme", "QR Kod", "Mobil Ödeme"],
-        isPopular: false,
+        paymentSpeed: "Ertesi Gün",
+        paymentSpeedHours: 24,
+        features: ["Linkle Ödeme", "Fiziki POS", "Sanal POS", "Dövizle Ödeme"],
+        currencyRates: {
+            USD: 2.49,
+            EUR: 2.39,
+            GBP: 2.59
+        },
+        cryptoRates: {
+            USDT: 1.99
+        },
+        isPopular: true,
         segment: "her ikisi",
         applyUrl: "https://paytr.com",
         rating: 4.3,
@@ -94,7 +106,13 @@ export const PROVIDERS: Provider[] = [
         installmentRates: { 3: 5.25, 6: 8.50, 12: 13.75 },
         paymentSpeed: "Ertesi Gün",
         paymentSpeedHours: 24,
-        features: ["Sandbox Ortamı", "Çoklu POS Desteği", "Webhook"],
+        features: ["Fiziki Kart", "Sanal POS", "Cüzdan"],
+        currencyRates: {
+            EUR: 2.75
+        },
+        cryptoRates: {
+            USDT: 2.10
+        },
         isPopular: false,
         segment: "kurumsal",
         applyUrl: "https://craftgate.io",
