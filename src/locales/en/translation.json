@@ -1,0 +1,15 @@
+{
+    "nav": {
+        "rates": "Rates",
+        "compare": "Compare",
+        "blog": "Blog",
+        "about": "About Us",
+        "login": "Login",
+        "register": "Sign Up Free"
+    },
+    "header": {
+        "lightMode": "Switch to light mode",
+        "darkMode": "Switch to dark mode",
+        "changeLanguage": "Change language"
+    }
+}

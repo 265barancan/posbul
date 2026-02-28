@@ -1,0 +1,15 @@
+{
+    "nav": {
+        "rates": "Oranlar",
+        "compare": "Karşılaştır",
+        "blog": "Blog",
+        "about": "Hakkımızda",
+        "login": "Giriş Yap",
+        "register": "Ücretsiz Kaydol"
+    },
+    "header": {
+        "lightMode": "Açık moda geç",
+        "darkMode": "Koyu moda geç",
+        "changeLanguage": "Dili değiştir"
+    }
+}

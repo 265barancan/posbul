@@ -3,19 +3,23 @@ import { Link, useLocation } from "react-router-dom";
 import { useThemeStore } from "../../store/themeStore";
 import Button from "../ui/Button";
 
+import { useTranslation } from "react-i18next";
+
 const NAV_LINKS = [
-    { label: "Oranlar", href: "/#oranlar" },
-    { label: "Karşılaştır", href: "/karsilastir" },
-    { label: "Blog", href: "/blog" },
-    { label: "Hakkımızda", href: "/hakkimizda" },
+    { key: "rates", href: "/#oranlar" },
+    { key: "compare", href: "/karsilastir" },
+    { key: "blog", href: "/blog" },
+    { key: "about", href: "/hakkimizda" },
 ];
 
 function NavLink({
     link,
+    label,
     pathname,
     onClick,
 }: {
-    link: { label: string; href: string };
+    link: { key: string; href: string };
+    label: string;
     pathname: string;
     onClick?: () => void;
 }) {
@@ -30,11 +34,11 @@ function NavLink({
                 href={link.href}
                 onClick={onClick}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${isActive
-                        ? "bg-primary/10 text-primary"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
             >
-                {link.label}
+                {label}
             </a>
         );
     }
@@ -44,11 +48,11 @@ function NavLink({
             to={link.href}
             onClick={onClick}
             className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${isActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                ? "bg-primary/10 text-primary"
+                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                 }`}
         >
-            {link.label}
+            {label}
         </Link>
     );
 }
@@ -57,6 +61,12 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const { isDark, toggle } = useThemeStore();
     const { pathname } = useLocation();
+    const { t, i18n } = useTranslation();
+
+    const changeLanguage = () => {
+        const newLang = i18n.language === "tr" ? "en" : "tr";
+        i18n.changeLanguage(newLang);
+    };
 
     const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
     const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -78,7 +88,7 @@ export default function Header() {
                     {/* Desktop Nav */}
                     <nav className="hidden items-center gap-1 md:flex" aria-label="Ana menü">
                         {NAV_LINKS.map((link) => (
-                            <NavLink key={link.href} link={link} pathname={pathname} />
+                            <NavLink key={link.href} link={link} label={t(`nav.${link.key}`)} pathname={pathname} />
                         ))}
                     </nav>
 
@@ -86,9 +96,17 @@ export default function Header() {
                     <div className="hidden items-center gap-3 md:flex">
                         {/* Dark Mode Toggle */}
                         <button
+                            onClick={changeLanguage}
+                            className="flex cursor-pointer items-center justify-center rounded-lg p-2 text-sm font-bold text-slate-500 uppercase transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                            aria-label={t("header.changeLanguage")}
+                        >
+                            {i18n.language === "tr" ? "EN" : "TR"}
+                        </button>
+
+                        <button
                             onClick={toggle}
                             className="cursor-pointer rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                            aria-label={isDark ? "Açık moda geç" : "Koyu moda geç"}
+                            aria-label={isDark ? t("header.lightMode") : t("header.darkMode")}
                         >
                             <span className="material-symbols-outlined text-[20px]">
                                 {isDark ? "light_mode" : "dark_mode"}
@@ -96,19 +114,26 @@ export default function Header() {
                         </button>
 
                         <Button variant="ghost" size="sm">
-                            Giriş Yap
+                            {t("nav.login")}
                         </Button>
                         <Button variant="primary" size="sm">
-                            Ücretsiz Kaydol
+                            {t("nav.register")}
                         </Button>
                     </div>
 
                     {/* Mobile Buttons */}
                     <div className="flex items-center gap-2 md:hidden">
                         <button
+                            onClick={changeLanguage}
+                            className="cursor-pointer rounded-lg p-2 text-sm font-bold text-slate-500 uppercase transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            aria-label={t("header.changeLanguage")}
+                        >
+                            {i18n.language === "tr" ? "EN" : "TR"}
+                        </button>
+                        <button
                             onClick={toggle}
                             className="cursor-pointer rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
-                            aria-label={isDark ? "Açık moda geç" : "Koyu moda geç"}
+                            aria-label={isDark ? t("header.lightMode") : t("header.darkMode")}
                         >
                             <span className="material-symbols-outlined text-[20px]">
                                 {isDark ? "light_mode" : "dark_mode"}
@@ -145,6 +170,7 @@ export default function Header() {
                                 <NavLink
                                     key={link.href}
                                     link={link}
+                                    label={t(`nav.${link.key}`)}
                                     pathname={pathname}
                                     onClick={closeMobile}
                                 />
@@ -152,10 +178,10 @@ export default function Header() {
                         </div>
                         <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-6 dark:border-slate-800">
                             <Button variant="outline" className="w-full justify-center">
-                                Giriş Yap
+                                {t("nav.login")}
                             </Button>
                             <Button variant="primary" className="w-full justify-center">
-                                Ücretsiz Kaydol
+                                {t("nav.register")}
                             </Button>
                         </div>
                     </nav>
